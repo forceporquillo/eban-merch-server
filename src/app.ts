@@ -5,6 +5,7 @@ import IDatabase from './interfaces/IDatabase';
 
 // Route Imports
 import productRoutes from './routes/productRoutes';
+import logging from './config/logging';
 
 const NAMESPACE = 'Server';
 const app = express();
@@ -44,6 +45,14 @@ const createApp = (database: IDatabase) => {
 
     // Product Routes
     app.use('/api', productRoutes(database));
+
+    // Test Route
+    app.get('/api/test', async (req, res) => {
+        const result = await database.mockGetAll();
+        logging.info(NAMESPACE, 'query res: ', result);
+
+        res.status(200).json(result);
+    });
 
     /** Not Found */
     app.use((req, res, next) => {

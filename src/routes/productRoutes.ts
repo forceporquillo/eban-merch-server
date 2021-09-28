@@ -10,11 +10,19 @@ const productRoutes = (database: IDatabase) => {
     const controller = productController(database);
     const router = express.Router();
 
-    // @route GET api/products
-    // @desc get list of all products
-    // @access Public
+    /**
+     * @route GET api/products
+     * @desc get list of all products
+     * @access Public
+     */
     router.get('/products', controller.getProducts);
 
+    /**
+     * @route GET api/products/:id
+     * @desc get info of specific product
+     * @access Public
+     */
+    router.get('/product/:id', controller.getProduct);
     return router;
 };
 

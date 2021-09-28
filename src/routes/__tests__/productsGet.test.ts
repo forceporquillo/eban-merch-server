@@ -1,9 +1,9 @@
 import request from 'supertest';
 import createApp from '../../app';
 // define mock database functions
-import mockDatabase from '../../database/mockDatabase';
+import db from '../../database/mockDatabase';
 
-const app = createApp(mockDatabase);
+const app = createApp(db);
 
 describe('GET /products - get list of all products', () => {
     // should respond with 200 status code
@@ -12,7 +12,7 @@ describe('GET /products - get list of all products', () => {
     // it return json with message string and data containing the list
 
     beforeEach(() => {
-        mockDatabase.getProducts.mockReset();
+        db.getProducts.mockReset();
     });
 
     // test constants
@@ -40,8 +40,8 @@ describe('GET /products - get list of all products', () => {
 
     it('it should return json with message string and data containing the list', async () => {
         // mock function setup
-        mockDatabase.getProducts.mockReset();
-        mockDatabase.getProducts.mockResolvedValue(testProducts);
+        db.getProducts.mockReset();
+        db.getProducts.mockResolvedValue(testProducts);
 
         // make the request
         const response = await request(app).get(testRoute).send();
@@ -49,7 +49,7 @@ describe('GET /products - get list of all products', () => {
         // expects
         expect(response.statusCode).toBe(200);
         expect(response.headers['content-type']).toEqual(expect.stringContaining('json'));
-        expect(mockDatabase.getProducts.mock.calls.length).toBe(1);
+        expect(db.getProducts.mock.calls.length).toBe(1);
         expect(response.body).toEqual({
             message: 'Query Success.',
             data: testProducts
