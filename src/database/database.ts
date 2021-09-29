@@ -2,6 +2,7 @@ import mysql from 'mysql2';
 
 import logging from '../config/logging';
 import config from '../config/config';
+import IProduct from '../interfaces/IProduct';
 const NAMESPACE = 'Database';
 
 /** Create connection to MySQL */
@@ -20,7 +21,7 @@ const connection = mysql.createPool({
  * @param {void}
  * @returns {array} products
  */
-const getProducts = async () => {
+const getProducts = async (): Promise<IProduct[]> => {
     // prepare statement
     const stmt = `
     SELECT GoodsID as id, 
@@ -44,7 +45,7 @@ const getProducts = async () => {
  * @param {string} id
  * @returns {object} product
  */
-const getProduct = async (id: string) => {
+const getProduct = async (id: string): Promise<IProduct> => {
     // prepare statement
     const stmt = `
     SELECT GoodsID as id, 
