@@ -15,14 +15,14 @@ const productRoutes = (database: IDatabase) => {
      * @desc get list of all products
      * @access Public
      */
-    router.get('/products', controller.getProducts);
+    router.get('/all', controller.getProducts);
 
     /**
      * @route GET api/products/:id
      * @desc get info of specific product
      * @access Public
      */
-    router.get('/product/:id', controller.getProduct);
+    router.get('/:id', controller.getProduct);
     return router;
 };
 

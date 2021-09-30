@@ -5,7 +5,7 @@ import db from '../../database/mockDatabase';
 
 const app = createApp(db);
 
-describe('GET /product/:id - get data of specific product', () => {
+describe('GET /api/product/:id - get data of specific product', () => {
     // should respond with 200 status code
     // should specify json in content type header
     // should fetch from database

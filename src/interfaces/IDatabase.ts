@@ -1,10 +1,17 @@
 import IProduct from './IProduct';
+import IUser from './IUser';
 
 interface IDatabase {
     getProducts(): Promise<IProduct[]>;
+    getProduct(id: string): Promise<IProduct>;
+    postUser(user: IUser): Promise<number>;
+
+    // helper funcs
+    emailExists(email: string): Promise<boolean>;
+    contactExists(contact: string): Promise<boolean>;
+
     // TODO: remove test database func
     mockGetAll(): Promise<object[]>;
-    getProduct(id: string): Promise<IProduct>;
 }
 
 export default IDatabase;

@@ -5,6 +5,7 @@ import IDatabase from './interfaces/IDatabase';
 
 // Route Imports
 import productRoutes from './routes/productRoutes';
+import userRoutes from './routes/userRoutes';
 import logging from './config/logging';
 
 const NAMESPACE = 'Server';
@@ -44,7 +45,10 @@ const createApp = (database: IDatabase) => {
     });
 
     // Product Routes
-    app.use('/api', productRoutes(database));
+    app.use('/api/product', productRoutes(database));
+
+    // User Routes
+    app.use('/api/user', userRoutes(database));
 
     // Test Route
     app.get('/api/test', async (req, res) => {
