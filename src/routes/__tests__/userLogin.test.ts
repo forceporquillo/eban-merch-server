@@ -45,10 +45,10 @@ describe('POST /api/user/login - login a user', () => {
             expect(db.loginUser.mock.calls.length).toBe(1);
             expect(db.loginUser.mock.calls[0][0]).toBe(body.email);
             expect(db.loginUser.mock.calls[0][1]).toBe(body.password);
-            // expect(response.body).toEqual({
-            //     message: 'Query Success.',
-            //     data: testProducts
-            // });
+            expect(response.body).toEqual({
+                message: 'Login Success.',
+                token: expect.any(String)
+            });
         }
     });
 });

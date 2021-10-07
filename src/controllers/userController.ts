@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
 import HttpException from '../exceptions/HttpException.class';
 import IDatabase from '../interfaces/IDatabase';
+import config from '../config/config';
 import logging from '../config/logging';
 
 const NAMESPACE = 'User Controller';
@@ -47,12 +49,18 @@ const userController = (database: IDatabase) => {
         const { email, password } = req.body;
         try {
             // login user
-            const userId = database.loginUser(email, password);
-            res.status(200).json({});
+            const userId = await database.loginUser(email, password);
 
             // generate jwt token
+            const signOptions = { expiresIn: 3 * 24 * 60 * 60 };
+
+            const token = jwt.sign({ id: userId }, config.key.secret, signOptions);
+
+            return res.status(200).json({
+                message: 'Login Success.',
+                token
+            });
         } catch (error) {
-            logging.error(NAMESPACE, 'error:', error);
             next(error);
         }
     };

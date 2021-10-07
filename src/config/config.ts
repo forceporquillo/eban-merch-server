@@ -25,9 +25,15 @@ const DATABASE = {
     database: MYSQL_DATABASE
 };
 
+// secret key
+const KEY = {
+    secret: 'TLajRs30u1'
+};
+
 const config = {
     server: SERVER,
-    database: DATABASE
+    database: DATABASE,
+    key: KEY
 };
 
 export default config;
