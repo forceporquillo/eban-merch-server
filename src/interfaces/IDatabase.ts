@@ -5,6 +5,7 @@ interface IDatabase {
     getProducts(): Promise<IProduct[]>;
     getProduct(id: string): Promise<IProduct>;
     postUser(user: IUser): Promise<number>;
+    loginUser(email: string, password: string): Promise<number>;
 
     // helper funcs
     emailExists(email: string): Promise<boolean>;

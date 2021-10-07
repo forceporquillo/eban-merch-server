@@ -13,10 +13,17 @@ const userRoutes = (database: IDatabase) => {
 
     /**
      * @route POST api/user
-     * @desc get list of all products
+     * @desc register a user
      * @access Public
      */
     router.post('/', validation.user, controller.postUser);
+
+    /**
+     * @route POST api/user/login
+     * @desc log a user in
+     * @access Public
+     */
+    router.post('/login', controller.loginUser);
     return router;
 };
 

@@ -99,6 +99,15 @@ const postUser = async (user: IUser) => {
 };
 
 /**
+ * Login a user
+ * @param email: string, password: email
+ * @returns {number} userId
+ */
+const loginUser = async (email: string, password: string): Promise<number> => {
+    return 1;
+};
+
+/**
  * Determines if email exists
  * @param {string} email
  * @returns {boolean}
@@ -170,6 +179,7 @@ const database = {
     getProducts,
     getProduct,
     postUser,
+    loginUser,
     emailExists,
     contactExists,
     mockGetAll

@@ -38,8 +38,28 @@ const userController = (database: IDatabase) => {
         }
     };
 
+    /**
+     * @route POST api/user/login
+     * @desc get list of all products
+     * @access Public
+     */
+    const loginUser = async (req: Request, res: Response, next: NextFunction) => {
+        const { email, password } = req.body;
+        try {
+            // login user
+            const userId = database.loginUser(email, password);
+            res.status(200).json({});
+
+            // generate jwt token
+        } catch (error) {
+            logging.error(NAMESPACE, 'error:', error);
+            next(error);
+        }
+    };
+
     return {
-        postUser
+        postUser,
+        loginUser
     };
 };
 
