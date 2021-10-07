@@ -100,11 +100,49 @@ const postUser = async (user: IUser) => {
 
 /**
  * Login a user
+ * returns -1 if credentials are wrong
  * @param email: string, password: email
  * @returns {number} userId
  */
 const loginUser = async (email: string, password: string): Promise<number> => {
-    return 1;
+    const stmt = `
+    SELECT AccountID as id, Pass as password 
+        FROM users
+        WHERE Email = ?`;
+
+    const [rows] = await connection.promise().query(stmt, email);
+
+    const user = JSON.parse(JSON.stringify(rows))[0];
+
+    // check if email exists
+    if (!user) {
+        return -1;
+    }
+
+    // compare hashed password
+    if (!(await bcrypt.compare(password, user.password))) {
+        return -1;
+    }
+
+    return user.id;
+};
+
+/**
+ * Get a user by ID
+ * returns user object
+ * @param {number} id
+ * @returns {IUser} user
+ */
+const getUserById = async (id: number): Promise<IUser> => {
+    return {
+        email: 'john@email.com',
+        name: 'John Doe',
+        password: '',
+        address: 'Zaragoza',
+        contact: '09566121716',
+        sex: 0,
+        birthdate: '1999-05-30'
+    };
 };
 
 /**
@@ -179,6 +217,7 @@ const database = {
     getProducts,
     getProduct,
     postUser,
+    getUserById,
     loginUser,
     emailExists,
     contactExists,

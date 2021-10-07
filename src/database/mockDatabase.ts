@@ -10,6 +10,7 @@ const getProduct = jest.fn();
 // user functions
 const postUser = jest.fn();
 const loginUser = jest.fn();
+const getUserById = jest.fn();
 
 // helper functions
 const emailExists = jest.fn();
@@ -22,6 +23,7 @@ const mockDatabase = {
     getProduct,
     postUser,
     loginUser,
+    getUserById,
     emailExists,
     contactExists,
     mockGetAll

@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { JwtPayload } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 import HttpException from '../exceptions/HttpException.class';
 import IDatabase from '../interfaces/IDatabase';
@@ -51,6 +52,10 @@ const userController = (database: IDatabase) => {
             // login user
             const userId = await database.loginUser(email, password);
 
+            if (userId == -1) {
+                throw new HttpException(400, 'Login Failed.');
+            }
+
             // generate jwt token
             const signOptions = { expiresIn: 3 * 24 * 60 * 60 };
 
@@ -65,9 +70,33 @@ const userController = (database: IDatabase) => {
         }
     };
 
+    /**
+     * @route GET api/user
+     * @desc get list of all products
+     * @access Public
+     */
+    const getUser = async (
+        decoded: JwtPayload,
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) => {
+        try {
+            const { id } = decoded;
+            const user = await database.getUserById(id);
+            res.status(200).json({
+                message: 'Query Success.',
+                data: user
+            });
+        } catch (error) {
+            next(error);
+        }
+    };
+
     return {
         postUser,
-        loginUser
+        loginUser,
+        getUser
     };
 };
 

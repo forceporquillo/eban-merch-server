@@ -2,6 +2,7 @@ import express from 'express';
 import IDatabase from '../interfaces/IDatabase';
 import userController from '../controllers/userController';
 import validation from '../middlewares/validationMiddleware';
+import auth from '../middlewares/authMiddleware';
 
 /**
  * Function that returns a router with the controllers
@@ -11,6 +12,12 @@ const userRoutes = (database: IDatabase) => {
     const controller = userController(database);
     const router = express.Router();
 
+    /**
+     * @route GET api/user
+     * @desc get user info using jwt token
+     * @access Private
+     */
+    router.get('/', auth, controller.getUser);
     /**
      * @route POST api/user
      * @desc register a user
